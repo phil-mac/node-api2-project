@@ -18,7 +18,6 @@ router.post('/', (req, res) => {
 router.post('/:id/comments', (req, res) => {
     db.findById(req.params.id)
         .then(output => {
-            console.log(output);
             if (output.length === 0){
                 res.status(404).json({ message: "The post with the specified ID does not exist." });
             } else{
@@ -53,7 +52,6 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     db.findById(req.params.id)
         .then(output => {
-            console.log(output);
             if (output.length === 0){
                 res.status(404).json({ message: "The post with the specified ID does not exist." });
             } else{
@@ -68,7 +66,6 @@ router.get('/:id', (req, res) => {
 router.get('/:id/comments', (req, res) => {
     db.findPostComments(req.params.id)
         .then(output => {
-            console.log(output);
             if (output.length === 0){
                 res.status(404).json({ message: "The post with the specified ID does not exist." });
             } else{
@@ -83,7 +80,6 @@ router.get('/:id/comments', (req, res) => {
 router.delete('/:id', (req, res) => {
     db.findById(req.params.id)
         .then(output => {
-            console.log(output);
             if (output.length === 0){
                 res.status(404).json({ message: "The post with the specified ID does not exist." });
             } else{
@@ -110,7 +106,7 @@ router.put('/:id', (req, res) => {
                 if (req.body.title === undefined || req.body.contents === undefined){
                     res.status(400).json({ errorMessage: "Please provide title and contents for the post." });
                 } else{
-                    db.update(req.body)
+                    db.update(req.params.id, req.body)
                         .then(reply => {
                             res.status(200).json(reply);
                         })
